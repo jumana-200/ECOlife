@@ -1,13 +1,73 @@
-body {
-  font-family: Arial;
-  background: #f4fff4;
-  text-align: center;
+const cropSettings = {
+  wheat: { moisture: 40, phMin: 6, phMax: 7 },
+  corn: { moisture: 50, phMin: 5.5, phMax: 7 },
+  rice: { moisture: 70, phMin: 5, phMax: 6.5 }
+};
+
+let chartData = {
+  labels: [],
+  datasets: [{
+    label: "Soil Moisture (%)",
+    data: [],
+    borderWidth: 2
+  }]
+};
+
+const ctx = document.getElementById("soilChart").getContext("2d");
+const soilChart = new Chart(ctx, {
+  type: "line",
+  data: chartData,
+  options: {
+    responsive: true,
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+
+function updateCard(card, value, good, warn) {
+  card.className = "card";
+  if (value >= good) card.classList.add("good");
+  else if (value >= warn) card.classList.add("warning");
+  else card.classList.add("bad");
 }
 
-.card {
-  background: white;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
+function updateData() {
+  const crop = document.getElementById("cropSelect").value;
+  const settings = cropSettings[crop];
+
+  let temp = (Math.random() * 15 + 20).toFixed(1);
+  let moisture = Math.floor(Math.random() * 80);
+  let ph = (Math.random() * 3 + 5).toFixed(1);
+  let nutrients = ["Low", "Medium", "High"][Math.floor(Math.random() * 3)];
+
+  document.getElementById("temp").innerText = temp;
+  document.getElementById("moisture").innerText = moisture;
+  document.getElementById("ph").innerText = ph;
+  document.getElementById("nutrients").innerText = nutrients;
+
+  updateCard(document.getElementById("moistureCard"), moisture, settings.moisture, settings.moisture - 15);
+  updateCard(document.getElementById("phCard"), ph, settings.phMin, settings.phMin - 0.5);
+
+  let advice = "";
+  if (moisture < settings.moisture) advice += "Increase irrigation. ";
+  if (ph < settings.phMin) advice += "Soil too acidic – add lime. ";
+  if (ph > settings.phMax) advice += "Soil too alkaline – add sulfur. ";
+  if (nutrients === "Low") advice += "Add fertilizer. ";
+
+  document.getElementById("adviceText").innerText =
+    advice || "Soil conditions are optimal for selected crop.";
+
+  chartData.labels.push(new Date().toLocaleTimeString());
+  chartData.datasets[0].data.push(moisture);
+
+  if (chartData.labels.length > 8) {
+    chartData.labels.shift();
+    chartData.datasets[0].data.shift();
+  }
+
+  soilChart.update();
 }
+
+setInterval(updateData, 3000);
+updateData();
