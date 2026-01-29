@@ -1,4 +1,3 @@
-alert("Script is running");
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -71,4 +70,5 @@ footer {
   font-size: 12px;
   color: #555;
 }
+
 
