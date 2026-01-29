@@ -13,14 +13,18 @@
     <p class="subtitle">Simulated real-time soil data for precision agriculture</p>
   </header>
 
-  <section class="controls">
-    <label>Select Crop:</label>
-    <select id="cropSelect">
-      <option value="wheat">Wheat</option>
-      <option value="corn">Corn</option>
-      <option value="rice">Rice</option>
-    </select>
-  </section>
+  <select id="cropSelect">
+  <option value="wheat">Wheat</option>
+  <option value="corn">Corn</option>
+  <option value="rice">Rice</option>
+  <option value="tomato">Tomato</option>
+  <option value="potato">Potato</option>
+  <option value="lettuce">Lettuce</option>
+  <option value="soybean">Soybean</option>
+  <option value="cotton">Cotton</option>
+  <option value="barley">Barley</option>
+  <option value="chili">Chili Pepper</option>
+</select>
 
   <section class="dashboard">
     <div class="card" id="tempCard">🌡 Temperature: <span id="temp"></span> °C</div>
@@ -45,5 +49,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
