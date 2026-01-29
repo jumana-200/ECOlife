@@ -1,7 +1,14 @@
 const cropSettings = {
-  wheat: { moisture: 40, phMin: 6, phMax: 7 },
-  corn: { moisture: 50, phMin: 5.5, phMax: 7 },
-  rice: { moisture: 70, phMin: 5, phMax: 6.5 }
+  wheat:    { moisture: 40, phMin: 6,   phMax: 7 },
+  corn:     { moisture: 50, phMin: 5.5, phMax: 7 },
+  rice:     { moisture: 70, phMin: 5,   phMax: 6.5 },
+  tomato:   { moisture: 45, phMin: 5.5, phMax: 7 },
+  potato:   { moisture: 60, phMin: 5,   phMax: 6 },
+  lettuce:  { moisture: 50, phMin: 6,   phMax: 7 },
+  soybean:  { moisture: 45, phMin: 6,   phMax: 7 },
+  cotton:   { moisture: 55, phMin: 5.5, phMax: 7 },
+  barley:   { moisture: 35, phMin: 6,   phMax: 7 },
+  chili:    { moisture: 45, phMin: 6,   phMax: 7 }
 };
 
 const ctx = document.getElementById("soilChart").getContext("2d");
@@ -75,4 +82,5 @@ function updateData() {
 }
 
 updateData();
-setInterval(updateData, 3000);
+setInterval(updateData, 5000);
+
