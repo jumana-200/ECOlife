@@ -1,21 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Smart Soil Monitoring System</title>
+  <meta charset="UTF-8">
+  <title>ECOlife – Smart Soil Monitoring</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
+  <header>
+    <h1>🌱 ECOlife Smart Soil Monitoring System</h1>
+    <p class="subtitle">Simulated real-time soil data for precision agriculture</p>
+  </header>
 
-<h1>🌱 Smart Soil Monitoring System</h1>
+  <section class="controls">
+    <label>Select Crop:</label>
+    <select id="cropSelect">
+      <option value="wheat">Wheat</option>
+      <option value="corn">Corn</option>
+      <option value="rice">Rice</option>
+    </select>
+  </section>
 
-<div class="card">🌡 Temperature: <span id="temp"></span> °C</div>
-<div class="card">💧 Moisture: <span id="moisture"></span> %</div>
-<div class="card">🧪 pH Level: <span id="ph"></span></div>
-<div class="card">🌾 Nutrients: <span id="nutrients"></span></div>
+  <section class="dashboard">
+    <div class="card" id="tempCard">🌡 Temperature: <span id="temp"></span> °C</div>
+    <div class="card" id="moistureCard">💧 Moisture: <span id="moisture"></span> %</div>
+    <div class="card" id="phCard">🧪 pH Level: <span id="ph"></span></div>
+    <div class="card" id="nutrientCard">🌾 Nutrients: <span id="nutrients"></span></div>
+  </section>
 
-<h2>Recommendations</h2>
-<p id="advice"></p>
+  <section class="advice">
+    <h2>🌿 Recommendations</h2>
+    <p id="adviceText"></p>
+  </section>
 
-<script src="script.js"></script>
+  <section class="charts">
+    <canvas id="soilChart"></canvas>
+  </section>
+
+  <footer>
+    <p>⚠️ Data shown is simulated for demonstration purposes</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
