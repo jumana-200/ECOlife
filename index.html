@@ -22,28 +22,6 @@
     </select>
   </section>
 
-  <section class="inputs">
-  <h2>🔢 Enter Soil Data</h2>
-
-  <label>Temperature (°C)</label><br>
-  <input type="number" id="tempInput"><br>
-
-  <label>Moisture (%)</label><br>
-  <input type="number" id="moistureInput"><br>
-
-  <label>pH Level</label><br>
-  <input type="number" step="0.1" id="phInput"><br>
-
-  <label>Nutrient Level</label><br>
-  <select id="nutrientInput">
-    <option>Low</option>
-    <option>Medium</option>
-    <option>High</option>
-  </select><br><br>
-
-  <button onclick="updateData()">Update Soil Data</button>
-</section>
-
   <section class="dashboard">
     <div class="card" id="tempCard">🌡 Temperature: <span id="temp"></span> °C</div>
     <div class="card" id="moistureCard">💧 Moisture: <span id="moisture"></span> %</div>
@@ -67,4 +45,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
