@@ -1,74 +1,78 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f7f2;
-  text-align: center preserving;
+const cropSettings = {
+  wheat: { moisture: 40, phMin: 6, phMax: 7 },
+  corn: { moisture: 50, phMin: 5.5, phMax: 7 },
+  rice: { moisture: 70, phMin: 5, phMax: 6.5 }
+};
+
+const ctx = document.getElementById("soilChart").getContext("2d");
+
+const soilChart = new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: [],
+    datasets: [{
+      label: "Soil Moisture (%)",
+      data: [],
+      borderColor: "green",
+      tension: 0.3
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+
+function setCardStatus(card, status) {
+  card.classList.remove("good", "warning", "bad");
+  card.classList.add(status);
 }
 
-header {
-  background: #2e7d32;
-  color: white;
-  padding: 20px;
+function updateData() {
+  const crop = document.getElementById("cropSelect").value;
+  const settings = cropSettings[crop];
+
+  const temp = (Math.random() * 15 + 20).toFixed(1);
+  const moisture = Math.floor(Math.random() * 80);
+  const ph = (Math.random() * 3 + 5).toFixed(1);
+  const nutrients = ["Low", "Medium", "High"][Math.floor(Math.random() * 3)];
+
+  document.getElementById("temp").innerText = temp;
+  document.getElementById("moisture").innerText = moisture;
+  document.getElementById("ph").innerText = ph;
+  document.getElementById("nutrients").innerText = nutrients;
+
+  const moistureCard = document.getElementById("moistureCard");
+  const phCard = document.getElementById("phCard");
+
+  if (moisture >= settings.moisture) setCardStatus(moistureCard, "good");
+  else if (moisture >= settings.moisture - 15) setCardStatus(moistureCard, "warning");
+  else setCardStatus(moistureCard, "bad");
+
+  if (ph >= settings.phMin && ph <= settings.phMax) setCardStatus(phCard, "good");
+  else setCardStatus(phCard, "warning");
+
+  let advice = [];
+  if (moisture < settings.moisture) advice.push("Increase irrigation.");
+  if (ph < settings.phMin) advice.push("Soil too acidic — add lime.");
+  if (ph > settings.phMax) advice.push("Soil too alkaline — add sulfur.");
+  if (nutrients === "Low") advice.push("Apply fertilizer.");
+
+  document.getElementById("adviceText").innerText =
+    advice.length ? advice.join(" ") : "Soil conditions are optimal for this crop.";
+
+  soilChart.data.labels.push(new Date().toLocaleTimeString());
+  soilChart.data.datasets[0].data.push(moisture);
+
+  if (soilChart.data.labels.length > 10) {
+    soilChart.data.labels.shift();
+    soilChart.data.datasets[0].data.shift();
+  }
+
+  soilChart.update();
 }
 
-.subtitle {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.controls {
-  margin: 20px;
-}
-
-select {
-  padding: 8px;
-  font-size: 16px;
-}
-
-.dashboard {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.card {
-  background: white;
-  width: 220px;
-  margin: 10px;
-  padding: 15px;
-  border-radius: 12px;
-  font-size: 18px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.good {
-  border-left: 8px solid #4caf50;
-}
-
-.warning {
-  border-left: 8px solid #ff9800;
-}
-
-.bad {
-  border-left: 8px solid #f44336;
-}
-
-.advice {
-  background: white;
-  margin: 20px;
-  padding: 15px;
-  border-radius: 12px;
-}
-
-.charts {
-  width: 80%;
-  margin: auto;
-}
-
-footer {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #555;
-}
-
-
+updateData();
+setInterval(updateData, 3000);
