@@ -173,6 +173,7 @@ and overall crop yield.
   document.getElementById("adviceText").innerHTML = explanation;
 }
 
+
 /* ============================
    INITIAL LOAD + CROP CHANGE
    ============================ */
@@ -180,5 +181,6 @@ and overall crop yield.
 document.getElementById("cropSelect").addEventListener("change", updateDashboard);
 
 updateDashboard();
+
 
 
