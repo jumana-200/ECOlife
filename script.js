@@ -120,16 +120,25 @@ function updateChart(crop) {
    ============================ */
 
 function updateExplanation(crop) {
+  const cropName = crop.charAt(0).toUpperCase() + crop.slice(1);
+
   const explanation = `
-The projected yield growth for ${crop.charAt(0).toUpperCase() + crop.slice(1)}
-is based on optimal soil conditions measured by probes.
-Stable temperature, moisture, pH, and nutrient availability
-allow the plant to progress efficiently through all growth stages.
-This results in higher photosynthesis efficiency, stronger biomass development,
-and increased final crop yield.
+<strong>Yield Prediction Analysis for ${cropName}</strong><br><br>
+
+The projected yield growth for <strong>${cropName}</strong> is based on optimal soil
+conditions measured by underground probes.<br><br>
+
+✔ <strong>Temperature</strong> supports efficient enzyme activity<br>
+✔ <strong>Moisture levels</strong> allow consistent nutrient transport<br>
+✔ <strong>pH balance</strong> maximizes nutrient absorption<br>
+✔ <strong>Nutrient availability</strong> promotes strong biomass development<br><br>
+
+Together, these conditions enhance photosynthesis efficiency,
+support healthy growth through all developmental stages,
+and result in a higher predicted final crop yield.
   `;
 
-  document.getElementById("adviceText").textContent = explanation;
+  document.getElementById("adviceText").innerHTML = explanation;
 }
 
 /* ============================
@@ -139,3 +148,4 @@ and increased final crop yield.
 document.getElementById("cropSelect").addEventListener("change", updateDashboard);
 
 updateDashboard();
+
