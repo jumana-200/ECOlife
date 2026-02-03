@@ -120,22 +120,54 @@ function updateChart(crop) {
    ============================ */
 
 function updateExplanation(crop) {
+  const data = cropData[crop];
   const cropName = crop.charAt(0).toUpperCase() + crop.slice(1);
 
+  let recommendations = [];
+
+  // Temperature check
+  if (data.temp < 18) {
+    recommendations.push("🌡 Increase soil temperature using mulching or plastic covers.");
+  } else if (data.temp > 30) {
+    recommendations.push("🌡 Reduce soil temperature using shading or irrigation cooling.");
+  } else {
+    recommendations.push("🌡 Temperature is within the optimal range.");
+  }
+
+  // Moisture check
+  if (data.moisture < 40) {
+    recommendations.push("💧 Increase irrigation to improve soil moisture levels.");
+  } else if (data.moisture > 70) {
+    recommendations.push("💧 Reduce watering to prevent root oxygen deficiency.");
+  } else {
+    recommendations.push("💧 Soil moisture level is optimal.");
+  }
+
+  // pH check
+  if (data.ph < 6.0) {
+    recommendations.push("🧪 Soil is too acidic. Add lime to increase pH.");
+  } else if (data.ph > 7.0) {
+    recommendations.push("🧪 Soil is too alkaline. Add sulfur or organic matter.");
+  } else {
+    recommendations.push("🧪 Soil pH is suitable for nutrient absorption.");
+  }
+
+  // Nutrient check
+  if (data.nutrients === "Low") {
+    recommendations.push("🌿 Nutrient levels are low. Add balanced NPK fertilizer.");
+  } else if (data.nutrients === "High") {
+    recommendations.push("🌿 Nutrient levels are high. Avoid additional fertilization.");
+  } else {
+    recommendations.push("🌿 Nutrient levels are balanced.");
+  }
+
   const explanation = `
-<strong>Yield Prediction Analysis for ${cropName}</strong><br><br>
-
-The projected yield growth for <strong>${cropName}</strong> is based on optimal soil
-conditions measured by underground probes.<br><br>
-
-✔ <strong>Temperature</strong> supports efficient enzyme activity<br>
-✔ <strong>Moisture levels</strong> allow consistent nutrient transport<br>
-✔ <strong>pH balance</strong> maximizes nutrient absorption<br>
-✔ <strong>Nutrient availability</strong> promotes strong biomass development<br><br>
-
-Together, these conditions enhance photosynthesis efficiency,
-support healthy growth through all developmental stages,
-and result in a higher predicted final crop yield.
+<strong>Soil Management Recommendations for ${cropName}</strong><br><br>
+${recommendations.join("<br>")}
+<br><br>
+These adjustments help maintain optimal soil conditions,
+improving nutrient uptake, photosynthesis efficiency,
+and overall crop yield.
   `;
 
   document.getElementById("adviceText").innerHTML = explanation;
@@ -148,4 +180,5 @@ and result in a higher predicted final crop yield.
 document.getElementById("cropSelect").addEventListener("change", updateDashboard);
 
 updateDashboard();
+
 
